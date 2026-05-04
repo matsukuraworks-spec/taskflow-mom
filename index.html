@@ -532,6 +532,57 @@
         .sidebar { display: none; }
         .stats { grid-template-columns: repeat(2,1fr); }
     }
+
+    /* タッチデバイス：アクションボタン常時表示 */
+    @media (hover: none) {
+        .t-actions { opacity: 1 !important; }
+    }
+
+    /* スマホ中（〜680px） */
+    @media (max-width: 680px) {
+        .app { grid-template-rows: 60px auto; }
+        .main { overflow-y: visible; padding: 14px 16px 44px; gap: 14px; }
+        .header { padding: 0 14px; }
+        .header-date { display: none; }
+        .streak { display: none; }
+        .logo-text { font-size: 19px; }
+    }
+
+    /* スマホ小（〜480px） */
+    @media (max-width: 480px) {
+        .header { padding: 0 12px; }
+        .logo-icon { width: 32px; height: 32px; font-size: 15px; }
+        .logo-text { font-size: 16px; }
+        /* 追加ボタン：アイコンのみ */
+        .btn-add { width: 36px; height: 36px; padding: 0; justify-content: center; font-size: 0; border-radius: 50%; gap: 0; }
+        .btn-add i { font-size: 14px; }
+        /* メイン */
+        .main { padding: 12px 12px 40px; gap: 12px; }
+        /* 統計カード */
+        .stats { gap: 8px; }
+        .stat { padding: 14px 14px; }
+        .stat-val { font-size: 28px; }
+        .stat-sub { font-size: 11px; }
+        /* 名言 */
+        .quote { padding: 12px 14px; }
+        .q-text { font-size: 13px; }
+        /* タスクヘッダー */
+        .tasks-hd { flex-direction: column; align-items: flex-start; gap: 8px; }
+        .controls { width: 100%; }
+        .search { flex: 1; min-width: 0; }
+        .search input { width: 100%; min-width: 0; }
+        /* タスクカード */
+        .task-card { padding: 13px 12px 13px 18px; gap: 10px; }
+        .t-name { font-size: 14px; margin-bottom: 5px; }
+        .badge { font-size: 10.5px; padding: 3px 7px; }
+        /* 進捗 */
+        .prog { padding: 14px 16px; }
+        /* トースト */
+        .toast-w { bottom: 14px; right: 10px; left: 10px; }
+        .toast { max-width: 100%; }
+        /* 大きな装飾花を非表示 */
+        .deco { display: none; }
+    }
     </style>
 </head>
 <body>
