@@ -393,6 +393,9 @@
     .badge-date.overdue { background: rgba(233,30,140,0.12); color: #e91e8c; }
     .badge-date.today   { background: rgba(41,182,246,0.12);  color: #0288d1; }
 
+    .note-link { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; word-break: break-all; }
+    .note-link:hover { color: var(--pink); }
+
     .t-notes {
         margin-top: 8px; font-size: 13px; color: var(--text2); line-height: 1.55;
         padding: 8px 12px;
@@ -527,10 +530,121 @@
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--pink-mid); border-radius: 3px; opacity: 0.5; }
 
+    /* ── COMPACT LAYOUT ─────────────────────────────────── */
+    .main { padding: 14px 18px 28px; gap: 10px; }
+    .quote { padding: 10px 14px; }
+    .q-icon { font-size: 20px; }
+    .q-text { font-size: 13px; }
+    .stat { padding: 12px 15px; }
+    .stat-val { font-size: 24px; }
+    .stat-lbl { font-size: 10px; margin-bottom: 6px; }
+    .stat-sub { font-size: 11px; }
+    .prog { padding: 12px 18px; }
+    .prog-hd { margin-bottom: 8px; }
+    .tasks-ttl { font-size: 16px; }
+    .search { padding: 7px 12px; }
+    .ctrl { padding: 7px 12px; }
+
+    /* ── STATUS STRIP ───────────────────────────────────── */
+    .status-strip {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 8px 14px;
+        background: var(--card);
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius-sm);
+        cursor: pointer; transition: all 0.2s;
+        user-select: none; box-shadow: var(--shadow);
+    }
+    .status-strip:hover { border-color: var(--border-hover); }
+    .status-strip-stats { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+    .ss-item { display: flex; align-items: center; gap: 5px; }
+    .ss-num { font-size: 14px; font-weight: 900; }
+    .ss-label { font-size: 11px; color: var(--text3); font-weight: 700; }
+    .ss-toggle { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text3); font-weight: 800; white-space: nowrap; }
+    .ss-chevron { transition: transform 0.3s; color: var(--pink); font-size: 10px; }
+    .ss-chevron.open { transform: rotate(180deg); }
+
+    /* ── DASHBOARD PANEL ────────────────────────────────── */
+    .dashboard-panel {
+        display: flex; flex-direction: column; gap: 10px;
+        overflow: hidden; max-height: 0; opacity: 0;
+        transition: max-height 0.4s ease, opacity 0.3s ease;
+    }
+    .dashboard-panel.open { max-height: 600px; opacity: 1; }
+
+    /* ── 2-COLUMN TASK GRID ─────────────────────────────── */
+    .tasks-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .task-card { border-radius: var(--radius-sm); padding: 10px 12px 10px 18px; gap: 10px; }
+    .t-name { font-size: 13px; margin-bottom: 5px; }
+    .t-notes { margin-top: 5px; font-size: 11.5px; padding: 5px 9px; max-height: 36px; overflow: hidden; }
+
+    /* ── TASK NUMBER BADGE ──────────────────────────────── */
+    .num-badge {
+        display: inline-flex; align-items: center;
+        padding: 2px 8px; border-radius: 20px;
+        background: linear-gradient(135deg, rgba(233,30,140,0.15), rgba(41,182,246,0.12));
+        border: 1px solid rgba(233,30,140,0.38);
+        font-size: 11px; font-weight: 800; color: #e91e8c;
+        font-variant-numeric: tabular-nums;
+        min-width: 32px; justify-content: center; letter-spacing: 0.3px;
+    }
+
     @media (max-width: 860px) {
         .app { grid-template-columns: 1fr; }
         .sidebar { display: none; }
         .stats { grid-template-columns: repeat(2,1fr); }
+        .tasks-list { grid-template-columns: 1fr; }
+    }
+
+    /* タッチデバイス：アクションボタン常時表示 */
+    @media (hover: none) {
+        .t-actions { opacity: 1 !important; }
+    }
+
+    /* スマホ中（〜680px） */
+    @media (max-width: 680px) {
+        .app { grid-template-rows: 60px auto; }
+        .main { overflow-y: visible; padding: 14px 16px 44px; gap: 14px; }
+        .header { padding: 0 14px; }
+        .header-date { display: none; }
+        .streak { display: none; }
+        .logo-text { font-size: 19px; }
+    }
+
+    /* スマホ小（〜480px） */
+    @media (max-width: 480px) {
+        .header { padding: 0 12px; }
+        .logo-icon { width: 32px; height: 32px; font-size: 15px; }
+        .logo-text { font-size: 16px; }
+        /* 追加ボタン：アイコンのみ */
+        .btn-add { width: 36px; height: 36px; padding: 0; justify-content: center; font-size: 0; border-radius: 50%; gap: 0; }
+        .btn-add i { font-size: 14px; }
+        /* メイン */
+        .main { padding: 12px 12px 40px; gap: 12px; }
+        /* 統計カード */
+        .stats { gap: 8px; }
+        .stat { padding: 14px 14px; }
+        .stat-val { font-size: 28px; }
+        .stat-sub { font-size: 11px; }
+        /* 名言 */
+        .quote { padding: 12px 14px; }
+        .q-text { font-size: 13px; }
+        /* タスクヘッダー */
+        .tasks-hd { flex-direction: column; align-items: flex-start; gap: 8px; }
+        .controls { width: 100%; }
+        .search { flex: 1; min-width: 0; }
+        .search input { width: 100%; min-width: 0; }
+        /* タスクカード */
+        .task-card { padding: 13px 12px 13px 18px; gap: 10px; }
+        .t-name { font-size: 14px; margin-bottom: 5px; }
+        .badge { font-size: 10.5px; padding: 3px 7px; }
+        /* 進捗 */
+        .prog { padding: 14px 16px; }
+        /* トースト */
+        .toast-w { bottom: 14px; right: 10px; left: 10px; }
+        .toast { max-width: 100%; }
+        /* 大きな装飾花を非表示 */
+        .deco { display: none; }
     }
     </style>
 </head>
@@ -570,40 +684,75 @@
     </aside>
 
     <main class="main">
-        <div class="quote">
-            <span class="q-icon">💕</span>
-            <div class="q-text" id="quoteEl"></div>
+        <!-- ステータスストリップ（常時表示） -->
+        <div class="status-strip" onclick="toggleDash()" title="タップで詳細を表示">
+            <div class="status-strip-stats">
+                <div class="ss-item">
+                    <span class="ss-num" id="sTot" style="background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">0</span>
+                    <span class="ss-label">タスク</span>
+                </div>
+                <div class="ss-item">
+                    <span class="ss-num" id="sDone" style="color:#388e3c">0</span>
+                    <span class="ss-label">完了</span>
+                </div>
+                <div class="ss-item">
+                    <span class="ss-num" id="sToday" style="color:#0288d1">0</span>
+                    <span class="ss-label">今日</span>
+                </div>
+                <div class="ss-item">
+                    <span class="ss-num" id="sOver" style="color:#e91e8c">0</span>
+                    <span class="ss-label">超過</span>
+                </div>
+                <div class="ss-item" style="margin-left:4px">
+                    <div class="prog-track" style="width:88px;height:6px">
+                        <div class="prog-fill" id="pBar" style="width:0%"></div>
+                    </div>
+                    <span class="ss-num" id="pPct" style="font-size:12px;margin-left:5px;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">0%</span>
+                </div>
+            </div>
+            <div class="ss-toggle">
+                <span id="dashLabel">詳細</span>
+                <i class="fa-solid fa-chevron-down ss-chevron" id="dashChevron"></i>
+            </div>
         </div>
 
-        <div class="stats">
-            <div class="stat">
-                <div class="stat-lbl">総タスク数</div>
-                <div class="stat-val" id="sTot" style="background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">0</div>
-                <div class="stat-sub">登録中</div>
+        <!-- ダッシュボードパネル（折りたたみ） -->
+        <div class="dashboard-panel" id="dashPanel">
+            <div class="quote">
+                <span class="q-icon">💕</span>
+                <div class="q-text" id="quoteEl"></div>
             </div>
-            <div class="stat">
-                <div class="stat-lbl">完了済み</div>
-                <div class="stat-val" id="sDone" style="color:#388e3c">0</div>
-                <div class="stat-sub">達成！</div>
-            </div>
-            <div class="stat">
-                <div class="stat-lbl">今日の期限</div>
-                <div class="stat-val" id="sToday" style="color:#0288d1">0</div>
-                <div class="stat-sub">本日締切</div>
-            </div>
-            <div class="stat">
-                <div class="stat-lbl">期限超過</div>
-                <div class="stat-val" id="sOver" style="color:#e91e8c">0</div>
-                <div class="stat-sub">要対応</div>
-            </div>
-        </div>
 
-        <div class="prog">
-            <div class="prog-hd">
-                <span class="prog-ttl">🌺 全体の達成率</span>
-                <span class="prog-pct" id="pPct">0%</span>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-lbl">総タスク数</div>
+                    <div class="stat-val" id="sTot2" style="background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">0</div>
+                    <div class="stat-sub">登録中</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-lbl">完了済み</div>
+                    <div class="stat-val" id="sDone2" style="color:#388e3c">0</div>
+                    <div class="stat-sub">達成！</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-lbl">今日の期限</div>
+                    <div class="stat-val" id="sToday2" style="color:#0288d1">0</div>
+                    <div class="stat-sub">本日締切</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-lbl">期限超過</div>
+                    <div class="stat-val" id="sOver2" style="color:#e91e8c">0</div>
+                    <div class="stat-sub">要対応</div>
+                </div>
             </div>
-            <div class="prog-track"><div class="prog-fill" id="pBar" style="width:0%"></div></div>
+
+            <div class="prog">
+                <div class="prog-hd">
+                    <span class="prog-ttl">🌺 全体の達成率</span>
+                    <span class="prog-pct" id="pPct2">0%</span>
+                </div>
+                <div class="prog-track"><div class="prog-fill" id="pBar2" style="width:0%"></div></div>
+            </div>
         </div>
 
         <div class="tasks-hd">
@@ -692,6 +841,14 @@ const QUOTES = [
     {t:'感謝の気持ちを忘れずに、今日も一歩前へ。',a:'ー'},
 ];
 
+function toggleDash() {
+    const panel=document.getElementById('dashPanel'),chevron=document.getElementById('dashChevron'),label=document.getElementById('dashLabel');
+    const isOpen=panel.classList.toggle('open');
+    chevron.classList.toggle('open',isOpen);
+    label.textContent=isOpen?'閉じる':'詳細';
+    localStorage.setItem('htask_dashOpen',isOpen?'1':'0');
+}
+
 function init() {
     const now = new Date();
     document.getElementById('hDate').textContent = now.toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
@@ -699,6 +856,11 @@ function init() {
     document.getElementById('quoteEl').innerHTML = `<strong>「${q.t}」</strong> — ${q.a}`;
     checkStreak();
     document.getElementById('streakNum').textContent = streak;
+    if(localStorage.getItem('htask_dashOpen')==='1'){
+        document.getElementById('dashPanel').classList.add('open');
+        document.getElementById('dashChevron').classList.add('open');
+        document.getElementById('dashLabel').textContent='閉じる';
+    }
     renderAll();
     document.addEventListener('keydown', e=>{ if(e.key==='Escape')closeModal(); if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openModal();} });
     document.addEventListener('click', e=>{ if(!e.target.closest('.sort-wrap')) document.getElementById('sortMenu').classList.remove('open'); });
@@ -775,9 +937,14 @@ function renderStats(){
     const tot=tasks.length,done=tasks.filter(t=>t.status==='done').length;
     const tod=tasks.filter(t=>isToday(t)).length,over=tasks.filter(t=>isOver(t)).length;
     const pct=tot>0?Math.round((done/tot)*100):0;
+    // ステータスストリップ
     document.getElementById('sTot').textContent=tot; document.getElementById('sDone').textContent=done;
     document.getElementById('sToday').textContent=tod; document.getElementById('sOver').textContent=over;
     document.getElementById('pPct').textContent=pct+'%'; document.getElementById('pBar').style.width=pct+'%';
+    // ダッシュボードパネル
+    document.getElementById('sTot2').textContent=tot; document.getElementById('sDone2').textContent=done;
+    document.getElementById('sToday2').textContent=tod; document.getElementById('sOver2').textContent=over;
+    document.getElementById('pPct2').textContent=pct+'%'; document.getElementById('pBar2').style.width=pct+'%';
 }
 
 function renderSide(){
@@ -794,6 +961,7 @@ function renderSide(){
 }
 
 function esc(s){const d=document.createElement('div');d.appendChild(document.createTextNode(s));return d.innerHTML;}
+function linkify(s){const urlRe=/(https?:\/\/[^\s<>"']+)/g;const parts=s.split(urlRe);return parts.map((p,i)=>{if(i%2===1){const safe=esc(p);return `<a href="${safe}" target="_blank" rel="noopener" class="note-link">${safe}</a>`;}return esc(p);}).join('');}
 
 function renderTasks(){
     const el=document.getElementById('taskList');
@@ -804,7 +972,7 @@ function renderTasks(){
     }
     const PL={high:'高優先',medium:'中優先',low:'低優先'};
     const SL={todo:'未着手',progress:'進行中',done:'完了'};
-    el.innerHTML=items.map(t=>{
+    el.innerHTML=items.map((t,idx)=>{
         const today=new Date();today.setHours(0,0,0,0);
         const d=dueDate(t),over=isOver(t),tod=isToday(t);
         let dateBadge='';
@@ -812,12 +980,13 @@ function renderTasks(){
         const cb=t.cat?`<span class="badge badge-cat">🏷 ${esc(t.cat)}</span>`:'';
         const rb=t.requester?`<span class="badge badge-req">👤 ${esc(t.requester)}</span>`:'';
         const eb=t.executor?`<span class="badge badge-exe">✋ ${esc(t.executor)}</span>`:'';
-        const nb=t.notes?`<div class="t-notes">${esc(t.notes)}</div>`:'';
+        const nb=t.notes?`<div class="t-notes">${linkify(t.notes)}</div>`:'';
+        const numLabel=`<span class="num-badge">#${String(idx+1).padStart(2,'0')}</span>`;
         return `<div class="task-card pri-${t.priority} ${t.status==='done'?'done':''}">
             <div class="chk ${t.status==='done'?'checked':''}" onclick="toggleDone('${t.id}')"></div>
             <div class="t-body">
                 <div class="t-name">${esc(t.name)}</div>
-                <div class="t-meta"><span class="badge badge-${t.priority}">${PL[t.priority]}</span><span class="badge badge-${t.status}">${SL[t.status]}</span>${cb}${rb}${eb}${dateBadge}</div>
+                <div class="t-meta">${numLabel}<span class="badge badge-${t.priority}">${PL[t.priority]}</span><span class="badge badge-${t.status}">${SL[t.status]}</span>${cb}${rb}${eb}${dateBadge}</div>
                 ${nb}
             </div>
             <div class="t-actions">
